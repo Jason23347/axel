@@ -99,6 +99,7 @@ main(int argc, char *argv[])
 	search_t *search;
 	conf_t conf[1];
 	axel_t *axel;
+	int read_from_file = 0, url_num = 0;
 	int j, cur_head = 0, ret = 1;
 	char *s;
 
@@ -118,7 +119,7 @@ main(int argc, char *argv[])
 	opterr = 0;
 
 	j = -1;
-	while (1) {
+	for ( ;; ) {
 		int option = getopt_long(argc, argv,
 					 "s:n:o:S::46NqvhVakcH:U:T:",
 					 axel_options, NULL);
@@ -237,15 +238,30 @@ main(int argc, char *argv[])
 	if (argc - optind == 0) {
 		print_help();
 		goto free_conf;
-	} else if (strcmp(argv[optind], "-") == 0) {
-		s = malloc(MAX_STRING);
-		if (!s)
-			goto free_conf;
+	}
 
-		if (scanf("%1024[^\n]s", s) != 1) {
-			fprintf(stderr,
-				_("Error when trying to read URL (Too long?).\n"));
+	read_from_file = (0 == strcmp(argv[optind], "-"));
+	if (read_from_file) {
+		url_num = 1;
+	} else {
+		url_num = argc - optind;
+	}
+
+	/* read first url */
+	if (read_from_file) {
+		s = malloc(MAX_STRING);
+		if (!s) {
+			fprintf(stderr, _("%s\n"), strerror(errno));
+			goto free_conf;
+		}
+		if (fgets(s, MAX_STRING, stdin) == 0) {
 			free(s);
+			print_help();
+			goto free_conf;
+		}
+		if (strlen(s) == MAX_STRING) {
+			free(s);
+			fprintf(stderr, _("Error when trying to read URL (Too long?).\n"));
 			goto free_conf;
 		}
 	} else {
@@ -259,17 +275,22 @@ main(int argc, char *argv[])
 	}
 
 	printf(_("Initializing download: %s\n"), s);
+	/* search resource list, sort by speed */
 	if (do_search) {
 		search = calloc(conf->search_amount + 1, sizeof(search_t));
-		if (!search)
+		if (!search) {
 			goto free_conf;
+		}
 
 		search[0].conf = conf;
 		if (conf->verbose)
 			printf(_("Doing search...\n"));
 		int i = search_makelist(search, s);
+		if (read_from_file)
+			free(s);
 		if (i < 0) {
 			fprintf(stderr, _("File not found\n"));
+			free(search);
 			goto free_conf;
 		}
 		if (conf->verbose)
@@ -281,42 +302,55 @@ main(int argc, char *argv[])
 		}
 
 		search_sortlist(search, i);
+		j = min(j, conf->search_top);
+		for (i = 1; i < j; i++) {
+			search[i - 1].next = &search[i];
+		}
+		search[j - 1].next = &search[0];
 		if (conf->verbose) {
 			printf(_("%i usable servers found, will use these URLs:\n"),
 			       j);
-			j = min(j, conf->search_top);
 			printf("%-60s %15s\n", "URL", _("Speed"));
 			for (i = 0; i < j; i++)
 				printf("%-70.70s %5i\n", search[i].url,
 				       search[i].speed);
 			printf("\n");
 		}
-		axel = axel_new(conf, j, search);
-		free(search);
-		if (!axel || axel->ready == -1) {
-			print_messages(axel);
-			goto close_axel;
-		}
-	} else if (argc - optind == 1) {
-		axel = axel_new(conf, 0, s);
-		if (!axel || axel->ready == -1) {
-			print_messages(axel);
-			goto close_axel;
-		}
-	} else {
-		search = calloc(argc - optind, sizeof(search_t));
-		if (!search)
+	} else { /* read url list from argv or stdin */
+		search = calloc(url_num, sizeof(search_t));
+		if (!search) {
+			free(search);
 			goto free_conf;
-
-		for (int i = 0; i < argc - optind; i++)
-			strlcpy(search[i].url, argv[optind + i],
-				sizeof(search[i].url));
-		axel = axel_new(conf, argc - optind, search);
-		free(search);
-		if (!axel || axel->ready == -1) {
-			print_messages(axel);
-			goto close_axel;
 		}
+		strlcpy(search->url, s, sizeof(search->url));
+		url_num = search_readlist(search, stdin, argv + optind, url_num, read_from_file);
+		if (url_num < 0) {
+			for (search_t **node = &search; *node;) {
+				search_t *entry = *node;
+				*node = entry->next;
+				free(entry);
+			}
+			goto free_conf;
+		}
+	}
+
+	if (url_num == 1) {
+		axel = axel_new(conf, 0, s);
+	} else {
+		axel = axel_new(conf, url_num, search);
+	}
+	if (read_from_file) {
+		free(s);
+		for (search_t **node = &search; *node;) {
+			search_t *entry = *node;
+			*node = entry->next;
+			free(entry);
+		}
+	}
+
+	if (!axel || axel->ready == -1) {
+		print_messages(axel);
+		goto close_axel;
 	}
 	print_messages(axel);
 	if (s != argv[optind]) {

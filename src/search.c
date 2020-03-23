@@ -40,6 +40,8 @@
 
 /* filesearching.com searcher */
 
+#include <stdio.h>
+
 #include "axel.h"
 #include "sleep.h"
 
@@ -90,6 +92,59 @@ out:
 	return ret;
 }
 #endif
+
+/* scan url list from file, returns number of urls */
+int
+__search_readlist_file(search_t *results, FILE *fd)
+{
+	int nresults = 1;
+	search_t *cur = results, *tmp;
+	char *s = malloc(MAX_STRING);
+	if (!s) {
+		fprintf(stderr, _("%s\n"), strerror(errno));
+		nresults = -1;
+		goto free_str;
+	}
+
+	/* scan url list from stdin */
+	for (;;) {
+		if (fgets(s, MAX_STRING, fd) == 0) {
+			break;
+		}
+		if (strlen(s) == MAX_STRING) {
+			fprintf(stderr, _("Error when trying to read URL (Too long?).\n"));
+			nresults = -1;
+			goto free_str;
+		}
+		fprintf(stderr, "got url: %s\n", s);
+		tmp = malloc(sizeof(search_t));
+		if (!tmp) {
+			fprintf(stderr, _("%s\n"), strerror(errno));
+			nresults = -1;
+			goto free_str;
+		}
+		strlcpy(tmp->url, s, sizeof(tmp->url));
+		cur->next = tmp;
+		cur = tmp;
+		nresults++;
+	}
+
+ free_str:
+	free(s);
+	return nresults;
+}
+
+/* read url list from argv */
+int
+__search_readlist_params(search_t *results, char *argv[], int count)
+{
+	for (int i = 1; i < count; i++) {
+		strlcpy(results[i].url, argv[i],
+			sizeof(results[i].url));
+		results[i - 1].next = &results[i];
+	}
+	return count;
+}
 
 int
 search_makelist(search_t *results, char *orig_url)
