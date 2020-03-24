@@ -26,71 +26,71 @@ msgstr "Buffer ridimensionato per questa velocità."
 msgid "Invalid URL"
 msgstr "URL non valido"
 
-#: src/axel.c:140
+#: src/axel.c:126
 msgid "Could not parse URL.\n"
 msgstr "Impossibile interpretare l'URL.\n"
 
-#: src/axel.c:164
+#: src/axel.c:150
 #, c-format
 msgid "Incomplete download found, ignoring no-clobber option\n"
 msgstr "Trovato download incompleto, ignoro l'opzione \"no-clobber\"\n"
 
-#: src/axel.c:167
+#: src/axel.c:153
 #, c-format
 msgid "File '%s' already there; not retrieving.\n"
 msgstr "Il file '%s' è già presente; download non effettuato.\n"
 
-#: src/axel.c:197
+#: src/axel.c:183
 #, fuzzy, c-format
 msgid "File size: %zu bytes"
 msgstr "Dimensione file: %zu byte"
 
-#: src/axel.c:200
+#: src/axel.c:186
 msgid "File size: unavailable"
 msgstr "Dimensione file: non disponibile"
 
-#: src/axel.c:229
+#: src/axel.c:215
 #, c-format
 msgid "Opening output file %s"
 msgstr "Sto aprendo il file di output %s"
 
-#: src/axel.c:237
+#: src/axel.c:223
 msgid "Server unsupported, starting from scratch with one connection."
 msgstr "Server non supportato, sto ricominciando da zero con una connessione."
 
-#: src/axel.c:254
+#: src/axel.c:240
 #, c-format
 msgid "%s.st: Error, truncated state file\n"
 msgstr "%s.st: Errore, file di stato troncato\n"
 
-#: src/axel.c:262
+#: src/axel.c:248
 #, c-format
 msgid "Bogus number of connections stored in state file\n"
 msgstr ""
 
-#: src/axel.c:274
+#: src/axel.c:260
 #, c-format
 msgid "State file has old format.\n"
 msgstr "Il file di stato utilizza il vecchio formato.\n"
 
-#: src/axel.c:307
+#: src/axel.c:293
 #, c-format
 msgid "State file found: %zu bytes downloaded, %zu to go."
 msgstr "Trovato file di stato: %zu byte scaricati, %zu al termine."
 
-#: src/axel.c:313 src/axel.c:324
+#: src/axel.c:299 src/axel.c:310
 msgid "Error opening local file"
 msgstr "Errore nell'apertura del file locale"
 
-#: src/axel.c:337
+#: src/axel.c:323
 msgid "Crappy filesystem/OS.. Working around. :-("
 msgstr "Filesystem/OS scadente.. Raggiro il problema. :-("
 
-#: src/axel.c:350
+#: src/axel.c:336
 msgid "Error creating local file"
 msgstr "Errore nella creazione del file locale"
 
-#: src/axel.c:383
+#: src/axel.c:369
 #, c-format
 msgid ""
 "\n"
@@ -99,208 +99,184 @@ msgstr ""
 "\n"
 "Riattivando la connessione %d\n"
 
-#: src/axel.c:413
+#: src/axel.c:399
 msgid "Starting download"
 msgstr "Inizio download"
 
-#: src/axel.c:421 src/axel.c:604
+#: src/axel.c:407 src/axel.c:590
 #, c-format
 msgid "Connection %i downloading from %s:%i using interface %s"
 msgstr "La connessione %i sta scaricando da %s:%i usando l'interfaccia %s"
 
-#: src/axel.c:431 src/axel.c:616
+#: src/axel.c:417 src/axel.c:602
 msgid "pthread error!!!"
 msgstr "Errore pthread!!!"
 
-#: src/axel.c:477
+#: src/axel.c:463
 #, c-format
 msgid "Error while waiting for connection: %s"
 msgstr "Errore durante l'attesa della connessione: %s"
 
-#: src/axel.c:509
+#: src/axel.c:495
 #, c-format
 msgid "Connection %i timed out"
 msgstr "Connessione %i scaduta"
 
-#: src/axel.c:522
+#: src/axel.c:508
 #, c-format
 msgid "Error on connection %i! Connection closed"
 msgstr "Errore nella connessione %i! Connessione terminata"
 
-#: src/axel.c:536
+#: src/axel.c:522
 #, c-format
 msgid "Connection %i unexpectedly closed"
 msgstr "Connessione %i terminata inaspettatamente"
 
-#: src/axel.c:540 src/axel.c:556
+#: src/axel.c:526 src/axel.c:542
 #, c-format
 msgid "Connection %i finished"
 msgstr "Connessione %i terminata"
 
-#: src/axel.c:566
+#: src/axel.c:552
 msgid "Write error!"
 msgstr "Errore di scrittura!"
 
-#: src/axel.c:664
+#: src/axel.c:650
 #, c-format
 msgid "Error while enforcing throttling: %s"
 msgstr "Errore nell'applicazione del limite di velocità: %s"
 
-#: src/axel.c:844
+#: src/axel.c:830
 #, c-format
 msgid "Too few bytes remaining, forcing a single connection\n"
 msgstr "Restano pochi byte, forzando una singola connessione\n"
 
-#: src/axel.c:863
+#: src/axel.c:849
 #, c-format
 msgid "Downloading %lld-%lld using conn. %i\n"
 msgstr "Scaricando %lld-%lld usando la conn. %i\n"
 
-#: src/conf.c:68
+#: src/conf.c:69
 #, c-format
 msgid "I/O error while reading config file: %s\n"
 msgstr "Errore I/O nella lettura del file di configurazione: %s\n"
 
-#: src/conf.c:83
+#: src/conf.c:84
 #, c-format
 msgid "Unknown protocol %s\n"
 msgstr "Protocollo sconosciuto %s\n"
 
-#: src/conf.c:187
+#: src/conf.c:188
 #, c-format
 msgid "Requested too many connections, max is %i\n"
 msgstr "Richiesto troppe connessioni, il massimo è %i\n"
 
-#: src/conf.c:202
+#: src/conf.c:203
 #, c-format
 msgid "Error in %s line %i.\n"
 msgstr "Errore in %s linea %i.\n"
 
-#: src/conf.c:266
+#: src/conf.c:270
 #, fuzzy, c-format
 msgid "HOME env variable too long\n"
 msgstr "Nome del file troppo lungo!\n"
 
-#: src/conn.c:76
+#: src/conn.c:77
 #, fuzzy, c-format
 msgid "Unsupported protocol\n"
 msgstr "Protocollo sconosciuto %s\n"
 
-#: src/conn.c:82
+#: src/conn.c:83
 #, c-format
 msgid "Secure protocol is not supported\n"
 msgstr "Il protocollo sicuro non è supportato\n"
 
-#: src/conn.c:417 src/ftp.c:131
+#: src/conn.c:418 src/ftp.c:132
 #, c-format
 msgid "Too many redirects.\n"
 msgstr "Troppi reindirizzamenti.\n"
 
-#: src/ftp.c:102
+#: src/ftp.c:103
 #, c-format
 msgid "Can't change directory to %s\n"
 msgstr "Impossibile cambiare la directory in %s\n"
 
-#: src/ftp.c:125 src/ftp.c:185
+#: src/ftp.c:126 src/ftp.c:186
 #, c-format
 msgid "File not found.\n"
 msgstr "File non trovato.\n"
 
-#: src/ftp.c:188
+#: src/ftp.c:189
 #, c-format
 msgid "Multiple matches for this URL.\n"
 msgstr "Più corrispondenze per questo URL.\n"
 
-#: src/ftp.c:260
+#: src/ftp.c:261
 #, c-format
 msgid "Error opening passive data connection.\n"
 msgstr "Errore nella connessione passiva dati.\n"
 
-#: src/ftp.c:294
+#: src/ftp.c:295
 #, c-format
 msgid "Error writing command %s\n"
 msgstr "Errore nella scrittura del comando %s\n"
 
-#: src/ftp.c:319 src/http.c:249
+#: src/ftp.c:320 src/http.c:252
 #, c-format
 msgid "Connection gone.\n"
 msgstr "Connessione terminata.\n"
 
-#: src/http.c:114
+#: src/http.c:117
 #, c-format
 msgid "Invalid proxy string: %s\n"
 msgstr "Stringa proxy non valida: %s\n"
 
-#: src/http.c:237
+#: src/http.c:240
 #, c-format
 msgid "Connection gone while writing.\n"
 msgstr "Connessione terminata durante la scrittura.\n"
 
-#: src/text.c:201
+#: src/text.c:194
 #, c-format
 msgid "Can't redirect stdout to /dev/null.\n"
 msgstr "Impossibile reindirizzare stdout a /dev/null.\n"
 
-#: src/text.c:244
+#: src/text.c:237
+#, c-format
+msgid "%s\n"
+msgstr ""
+
+#: src/text.c:247
 #, c-format
 msgid "Error when trying to read URL (Too long?).\n"
 msgstr "Errore nella lettura dell'URL (Troppo lungo?).\n"
 
-#: src/text.c:252
+#: src/text.c:254
 #, c-format
 msgid "Can't handle URLs of length over %zu\n"
 msgstr "Impossibile gestire URL con lunghezza superiore a %zu\n"
 
-#: src/text.c:258
+#: src/text.c:260
 #, c-format
 msgid "Initializing download: %s\n"
 msgstr "Inizializzazione download: %s\n"
 
-#: src/text.c:266
-#, c-format
-msgid "Doing search...\n"
-msgstr "Ricerca...\n"
-
-#: src/text.c:269
-#, c-format
-msgid "File not found\n"
-msgstr "File non trovato\n"
-
-#: src/text.c:273
-#, c-format
-msgid "Testing speeds, this can take a while...\n"
-msgstr "Testando le velocità, potrebbe volerci un po'...\n"
-
-#: src/text.c:276
-#, c-format
-msgid "Speed testing failed\n"
-msgstr "Test delle velocità fallito\n"
-
-#: src/text.c:282
-#, c-format
-msgid "%i usable servers found, will use these URLs:\n"
-msgstr "%i server utilizzabili trovati, userò questi URL:\n"
-
-#: src/text.c:285
-msgid "Speed"
-msgstr "Velocità"
-
-#: src/text.c:333
+#: src/text.c:283
 #, c-format
 msgid "Filename too long!\n"
 msgstr "Nome del file troppo lungo!\n"
 
-#: src/text.c:346
+#: src/text.c:296
 #, c-format
 msgid "No state file, cannot resume!\n"
 msgstr "Nessun file di stato, non posso riprendere!\n"
 
-#: src/text.c:350
+#: src/text.c:300
 #, c-format
 msgid "State file found, but no downloaded data. Starting from scratch.\n"
 msgstr "Trovato file di stato, ma dati non scaricati. Riparto da zero.\n"
 
-#: src/text.c:438
+#: src/text.c:388
 #, c-format
 msgid ""
 "\n"
@@ -309,57 +285,56 @@ msgstr ""
 "\n"
 "Scaricato %s in %s. (%.2f KB/s)\n"
 
-#: src/text.c:475
+#: src/text.c:425
 msgid "Kilo"
 msgstr "Kilo"
 
-#: src/text.c:475
+#: src/text.c:425
 msgid "Mega"
 msgstr "Mega"
 
-#: src/text.c:475
+#: src/text.c:425
 msgid "Giga"
 msgstr "Giga"
 
-#: src/text.c:475
+#: src/text.c:425
 msgid "Tera"
 msgstr "Tera"
 
-#: src/text.c:481
+#: src/text.c:431
 #, c-format
 msgid "%g %sbyte(s)"
 msgstr "%g %sbyte"
 
-#: src/text.c:497
+#: src/text.c:447
 #, c-format
 msgid "%i:%02i:%02i hour(s)"
 msgstr "%i:%02i:%02i ora/e"
 
-#: src/text.c:499
+#: src/text.c:449
 #, c-format
 msgid "%i:%02i minute(s)"
 msgstr "%i:%02i minuto/i"
 
-#: src/text.c:501
+#: src/text.c:451
 #, c-format
 msgid "%i second(s)"
 msgstr "%i secondo/i"
 
-#: src/text.c:594
+#: src/text.c:544
 #, c-format
 msgid "Can't setup alternate output. Deactivating.\n"
 msgstr ""
 "Impossibile impostare barra di progresso alternativo. Disattivazione.\n"
 
-#: src/text.c:656
+#: src/text.c:606
 #, fuzzy, c-format
 msgid ""
-"Usage: axel [options] url1 [url2] [url...]\n"
+"Usage: axel [options] url\n"
 "\n"
 "-s x\tSpecify maximum speed (bytes per second)\n"
 "-n x\tSpecify maximum number of connections\n"
 "-o f\tSpecify local output file\n"
-"-S[n]\tSearch for mirrors and download from n servers\n"
 "-4\tUse the IPv4 protocol\n"
 "-6\tUse the IPv6 protocol\n"
 "-H x\tAdd HTTP header string\n"
@@ -374,14 +349,14 @@ msgid ""
 "-T x\tSet I/O and connection timeout\n"
 "-V\tVersion information\n"
 "\n"
-"Visit https://github.com/axel-download-accelerator/axel/issues\n"
+"This is a lite version created from axel-download-accelerator/axel,\n"
+"visit https://github.com/jason23347/axel/issues to report bugs\n"
 msgstr ""
-"Utilizzo: axel [options] url1 [url2] [url...]\n"
+"Utilizzo: axel [options] url\n"
 "\n"
 "-s x\tSpecifica la velocità massima (byte al secondo)\n"
 "-n x\tSpecifa il numero massimo di connessioni\n"
 "-o f\tSpecifica il file di output locale\n"
-"-S [n]\tRicerca i mirror e scarica da n server\n"
 "-4\tConnetti usando IPv4\n"
 "-6\tConnetti usando IPv6\n"
 "-H x\tAggiungi header HTTP\n"
@@ -397,16 +372,15 @@ msgstr ""
 "\n"
 "Visita il sito https://github.com/axel-download-accelerator/axel/issues\n"
 
-#: src/text.c:678
+#: src/text.c:628
 #, fuzzy, c-format
 msgid ""
-"Usage: axel [options] url1 [url2] [url...]\n"
+"Usage: axel [options] url\n"
 "\n"
 "--max-speed=x\t\t-s x\tSpecify maximum speed (bytes per second)\n"
 "--num-connections=x\t-n x\tSpecify maximum number of connections\n"
 "--max-redirect=x\t\tSpecify maximum number of redirections\n"
 "--output=f\t\t-o f\tSpecify local output file\n"
-"--search[=n]\t\t-S[n]\tSearch for mirrors and download from n servers\n"
 "--ipv4\t\t\t-4\tUse the IPv4 protocol\n"
 "--ipv6\t\t\t-6\tUse the IPv6 protocol\n"
 "--header=x\t\t-H x\tAdd HTTP header string\n"
@@ -421,16 +395,15 @@ msgid ""
 "--timeout=x\t\t-T x\tSet I/O and connection timeout\n"
 "--version\t\t-V\tVersion information\n"
 "\n"
-"Visit https://github.com/axel-download-accelerator/axel/issues to report "
-"bugs\n"
+"This is a lite version based on axel-download-accelerator/axel,\n"
+"visit https://github.com/jason23347/axel/issues to report bugs\n"
 msgstr ""
-"Utilizzo: axel [options] url1 [url2] [url...]\n"
+"Utilizzo: axel [options] url\n"
 "\n"
 "--max-speed=x\t\t-s x\tSpecifica la velocità massima (byte al secondo)\n"
 "--num-connections=x\t-n x\tSpecifa il numero massimo di connessioni\n"
 "--max-redirect=x\t\tSpecifica il numero massimo di reindirizzamenti\n"
 "--output=f\t\t-o f\tSpecifica il file di output locale\n"
-"--search[=x]\t\t-S [x]\tRicerca i mirror e scarica da x server\n"
 "--ipv4\t\t\t-4\tUtilizza il protocollo IPv4\n"
 "--ipv6\t\t\t-6\tUtilizza il protocollo IPv6\n"
 "--header=x\t\t-H x\tAggiungi header HTTP\n"
@@ -447,16 +420,16 @@ msgstr ""
 "Visita il sito https://github.com/axel-download-accelerator/axel/issues per "
 "riportare bug\n"
 
-#: src/text.c:706
+#: src/text.c:656
 #, c-format
 msgid "Axel version %s (%s)\n"
 msgstr "Axel versione %s (%s)\n"
 
-#: src/text.c:714
+#: src/text.c:664
 msgid "and others."
 msgstr "e altri."
 
-#: src/text.c:715
+#: src/text.c:665
 msgid ""
 "Please, see the CREDITS file.\n"
 "\n"
@@ -469,7 +442,25 @@ msgstr ""
 msgid "SSL error: %s\n"
 msgstr "Errore SSL: %s\n"
 
-#: src/tcp.c:72
+#: src/tcp.c:74
 #, c-format
 msgid "Unable to connect to server %s:%i: %s\n"
 msgstr "Impossibile connettersi al server %s:%i: %s\n"
+
+#~ msgid "Doing search...\n"
+#~ msgstr "Ricerca...\n"
+
+#~ msgid "File not found\n"
+#~ msgstr "File non trovato\n"
+
+#~ msgid "Testing speeds, this can take a while...\n"
+#~ msgstr "Testando le velocità, potrebbe volerci un po'...\n"
+
+#~ msgid "Speed testing failed\n"
+#~ msgstr "Test delle velocità fallito\n"
+
+#~ msgid "%i usable servers found, will use these URLs:\n"
+#~ msgstr "%i server utilizzabili trovati, userò questi URL:\n"
+
+#~ msgid "Speed"
+#~ msgstr "Velocità"

@@ -1,38 +1,13 @@
-# AXEL
+# AXEL LITE
 
 #### Axel - Lightweight CLI download accelerator
 
-## 1. Help this project ##
+this project is based on [axel-download-accelerator/axel](https://github.com/axel-download-accelerator/axel)
 
-Axel needs your help. **If you are a programmer** and want to
-help a nice project, this is your opportunity.
+### differences
 
-Axel was imported from its old repository[1] to GitHub (the original
-homepage and developers are inactive).
-
-If you are interested in helping Axel, please read the
-[CONTRIBUTING.md](CONTRIBUTING.md) file.
-
-Additionally, there is a group to discuss and to coordinate the
-development process[3]. You can also find other developers in the
-`#axel` channel on freenode.
-
-[1]: https://alioth.debian.org/projects/axel
-[2]: https://tracker.debian.org/pkg/axel
-[3]: https://groups.google.com/forum/#!forum/axel-accelerator-dev
-
-## 2. What is Axel? ##
-
-Axel tries to accelerate the download process by using multiple
-connections per file, and can also balance the load between
-different servers.
-
-Axel tries to be as light as possible, so it might be useful on
-byte-critical systems.
-
-Axel supports HTTP, HTTPS, FTP and FTPS protocols.
-
-Thanks to the original developer of Axel, Wilmer van der Gaast, and everyone else who has contributed to it.
+- removed search
+- download 1 url only
 
 ## Building from source ##
 

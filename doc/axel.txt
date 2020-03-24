@@ -2,9 +2,10 @@ NAME
  axel - light command line download accelerator
 
 SYNOPSIS
- axel [OPTIONS] url1 [url2] [url...]
+ axel [OPTIONS] url
 
 DESCRIPTION
+ This program is a lite version if axel.
  Axel is a program that downloads a file from a FTP or HTTP server through multiple connection.
  Each connection downloads its own part of the file.
 
@@ -36,12 +37,6 @@ OPTIONS
  --output=x, -o x  Downloaded data will be put in a local file with the same name, unless you specify
                    a different name using this option. You can specify a directory as well, the program
                    will append the filename.
-
- --search[=x], -S[x]  Axel can do a search for mirrors using the filesearching.com search engine. This
-                      search will be done if you use this option. You can specify how many different
-                      mirrors should be used for the download as well. The search for mirrors can be
-                      time-consuming because the program tests every server's speed, and it checks
-                      whether the file's still available.
 
  --ipv6, -6  Use the IPv6 protocol only when connecting to the host.
 
@@ -113,7 +108,7 @@ FILES
 COPYRIGHT
  Axel was originally written by Wilmer van der Gaast and other authors over time. Please, see the AUTHORS and CREDITS files.
 
- The project homepage is <https://github.com/axel-download-accelerator/axel>
+ The project homepage is <https://github.com/jason23347/axel>
 
 HELP THIS PROJECT
  If you intent to help, please, read the CONTRIBUTING.md file. On Debian systems, this file will be available at
