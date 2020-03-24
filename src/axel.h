@@ -100,7 +100,6 @@ typedef message_t if_t;
 #include "http.h"
 #include "conn.h"
 #include "ssl.h"
-#include "search.h"
 
 #define min(a, b) \
 	({ \
@@ -130,7 +129,7 @@ typedef struct {
 	url_t *url;
 } axel_t;
 
-axel_t *axel_new(conf_t *conf, int count, void *url);
+axel_t *axel_new(conf_t *conf, const char *url);
 int axel_open(axel_t *axel);
 void axel_start(axel_t *axel);
 void axel_do(axel_t *axel);

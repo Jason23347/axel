@@ -95,11 +95,9 @@ int
 main(int argc, char *argv[])
 {
 	char fn[MAX_STRING];
-	int do_search = 0;
-	search_t *search;
 	conf_t conf[1];
 	axel_t *axel;
-	int read_from_file = 0, url_num = 0;
+	int read_from_file;
 	int j, cur_head = 0, ret = 1;
 	char *s;
 
@@ -121,7 +119,7 @@ main(int argc, char *argv[])
 	j = -1;
 	for ( ;; ) {
 		int option = getopt_long(argc, argv,
-					 "s:n:o:S::46NqvhVakcH:U:T:",
+					 "s:n:o:46NqvhVakcH:U:T:",
 					 axel_options, NULL);
 		if (option == -1)
 			break;
@@ -155,15 +153,6 @@ main(int argc, char *argv[])
 			break;
 		case 'o':
 			strlcpy(fn, optarg, sizeof(fn));
-			break;
-		case 'S':
-			do_search = 1;
-			if (optarg) {
-				if (!sscanf(optarg, "%i", &conf->search_top)) {
-					print_help();
-					goto free_conf;
-				}
-			}
 			break;
 		case '6':
 			conf->ai_family = AF_INET6;
@@ -240,14 +229,8 @@ main(int argc, char *argv[])
 		goto free_conf;
 	}
 
+	/* read url */
 	read_from_file = (0 == strcmp(argv[optind], "-"));
-	if (read_from_file) {
-		url_num = 1;
-	} else {
-		url_num = argc - optind;
-	}
-
-	/* read first url */
 	if (read_from_file) {
 		s = malloc(MAX_STRING);
 		if (!s) {
@@ -275,87 +258,17 @@ main(int argc, char *argv[])
 	}
 
 	printf(_("Initializing download: %s\n"), s);
-	/* search resource list, sort by speed */
-	if (do_search) {
-		search = calloc(conf->search_amount + 1, sizeof(search_t));
-		if (!search) {
-			goto free_conf;
-		}
-
-		search[0].conf = conf;
-		if (conf->verbose)
-			printf(_("Doing search...\n"));
-		int i = search_makelist(search, s);
-		if (read_from_file)
-			free(s);
-		if (i < 0) {
-			fprintf(stderr, _("File not found\n"));
-			free(search);
-			goto free_conf;
-		}
-		if (conf->verbose)
-			printf(_("Testing speeds, this can take a while...\n"));
-		j = search_getspeeds(search, i);
-		if (j < 0) {
-			fprintf(stderr, _("Speed testing failed\n"));
-			return 1;
-		}
-
-		search_sortlist(search, i);
-		j = min(j, conf->search_top);
-		for (i = 1; i < j; i++) {
-			search[i - 1].next = &search[i];
-		}
-		search[j - 1].next = &search[0];
-		if (conf->verbose) {
-			printf(_("%i usable servers found, will use these URLs:\n"),
-			       j);
-			printf("%-60s %15s\n", "URL", _("Speed"));
-			for (i = 0; i < j; i++)
-				printf("%-70.70s %5i\n", search[i].url,
-				       search[i].speed);
-			printf("\n");
-		}
-	} else { /* read url list from argv or stdin */
-		search = calloc(url_num, sizeof(search_t));
-		if (!search) {
-			free(search);
-			goto free_conf;
-		}
-		strlcpy(search->url, s, sizeof(search->url));
-		url_num = search_readlist(search, stdin, argv + optind, url_num, read_from_file);
-		if (url_num < 0) {
-			for (search_t **node = &search; *node;) {
-				search_t *entry = *node;
-				*node = entry->next;
-				free(entry);
-			}
-			goto free_conf;
-		}
-	}
-
-	if (url_num == 1) {
-		axel = axel_new(conf, 0, s);
-	} else {
-		axel = axel_new(conf, url_num, search);
-	}
-	if (read_from_file) {
+	axel = axel_new(conf, s);
+	if (read_from_file)
 		free(s);
-		for (search_t **node = &search; *node;) {
-			search_t *entry = *node;
-			*node = entry->next;
-			free(entry);
-		}
-	}
 
 	if (!axel || axel->ready == -1) {
 		print_messages(axel);
 		goto close_axel;
 	}
 	print_messages(axel);
-	if (s != argv[optind]) {
+	if (s != argv[optind])
 		free(s);
-	}
 
 	/* Check if a file name has been specified */
 	if (*fn) {
@@ -690,12 +603,11 @@ void
 print_help(void)
 {
 #ifdef NOGETOPTLONG
-	printf(_("Usage: axel [options] url1 [url2] [url...]\n"
+	printf(_("Usage: axel [options] url\n"
 		 "\n"
 		 "-s x\tSpecify maximum speed (bytes per second)\n"
 		 "-n x\tSpecify maximum number of connections\n"
 		 "-o f\tSpecify local output file\n"
-		 "-S[n]\tSearch for mirrors and download from n servers\n"
 		 "-4\tUse the IPv4 protocol\n"
 		 "-6\tUse the IPv6 protocol\n"
 		 "-H x\tAdd HTTP header string\n"
@@ -710,15 +622,15 @@ print_help(void)
 		 "-T x\tSet I/O and connection timeout\n"
 		 "-V\tVersion information\n"
 		 "\n"
-		 "Visit https://github.com/axel-download-accelerator/axel/issues\n"));
+		 "This is a lite version created from axel-download-accelerator/axel,\n"
+		 "visit https://github.com/jason23347/axel/issues to report bugs\n"));
 #else
-	printf(_("Usage: axel [options] url1 [url2] [url...]\n"
+	printf(_("Usage: axel [options] url\n"
 		 "\n"
 		 "--max-speed=x\t\t-s x\tSpecify maximum speed (bytes per second)\n"
 		 "--num-connections=x\t-n x\tSpecify maximum number of connections\n"
 		 "--max-redirect=x\t\tSpecify maximum number of redirections\n"
 		 "--output=f\t\t-o f\tSpecify local output file\n"
-		 "--search[=n]\t\t-S[n]\tSearch for mirrors and download from n servers\n"
 		 "--ipv4\t\t\t-4\tUse the IPv4 protocol\n"
 		 "--ipv6\t\t\t-6\tUse the IPv6 protocol\n"
 		 "--header=x\t\t-H x\tAdd HTTP header string\n"
@@ -733,7 +645,8 @@ print_help(void)
 		 "--timeout=x\t\t-T x\tSet I/O and connection timeout\n"
 		 "--version\t\t-V\tVersion information\n"
 		 "\n"
-		 "Visit https://github.com/axel-download-accelerator/axel/issues to report bugs\n"));
+		 "This is a lite version based on axel-download-accelerator/axel,\n"
+		 "visit https://github.com/jason23347/axel/issues to report bugs\n"));
 #endif
 }
 
